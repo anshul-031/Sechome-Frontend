@@ -10,13 +10,14 @@ import { Component, Injectable, ViewChild } from '@angular/core';
 export class AppComponent {
   title = 'sechome';
 
-  @ViewChild("photo") image: any;
+  @ViewChild("displayUserProvidedPhoto") displayUserProvidedPhoto: any;
 
   digilockerUrl: any;
   requestId: any;
   userDetails: any = new Map();
   redirect: RequestRedirect = "follow";
   mode: RequestMode = "cors"
+  userProvidedPhotoSRC: any;
 
   openURL() {
     this.openDigilockerURL();
@@ -42,8 +43,7 @@ export class AppComponent {
     //Get Details Response
     this.userDetails.set("Pan Number", this.getDetailsReponse.result.files[1].id.substr(-10));
 
-    this.userDetails.set("criminalRecord", "Clean");
-
+    this.userDetails.set("criminalRecord", "Not Found");
 
     var object1 = document.getElementById("object1");
     if (object1) {
@@ -67,9 +67,10 @@ export class AppComponent {
       if (data) {
         data.style.display = "block";
       }
-      // this.image.nativeElement.src = this.userDetails.photo;
     }, 1);
 
+
+    this.displayUserProvidedPhoto.nativeElement.src = this.userProvidedPhotoSRC;
   }
 
   openDigilockerURL() {
@@ -109,120 +110,23 @@ export class AppComponent {
       .catch(error => console.log('error', error));
   }
 
-  // getUrlDetails() {
-  //   var myHeaders = new Headers();
-  //   myHeaders.append("Authorization", this.token);
-  //   myHeaders.append("Content-Type", "application/json");
-  //   var raw = JSON.stringify({
-  //     "task": "url",
-  //     "essentials": {
-  //       "signup": false
-  //     }
-  //   });
-  //   var requestOptions = {
-  //     method: 'POST',
-  //     headers: myHeaders,
-  //     body: raw,
-  //     redirect: this.redirect
-  //   };
-  //   fetch("/patrons/" + this.userId + "/digilockers", requestOptions)
-  //     .then(response => response.json())
-  //     .then(result => {
-  //       this.getUrlResponse = result;
-  //       console.log("Get URL Response\n");
-  //       console.log(this.getUrlResponse);
+  setUserProvidedPhoto(event: any) {
+    if (!event.target.files[0] || event.target.files[0].length == 0) {
+      alert('You must select an image');
+      return;
+    }
 
-  //       this.digilockerUrl = result.result.url;
-  //       console.log("Digilocker Url\n");
-  //       console.log(this.digilockerUrl);
+    var mimeType = event.target.files[0].type;
 
-  //       this.requestId = result.result.requestId;
-  //       console.log("RequestID\n");
-  //       console.log(this.requestId);
+    if (mimeType.match(/image\/*/) == null) {
+      alert("Only images are supported");
+      return;
+    }
 
-  //       window.open(this.digilockerUrl, "_blank");
-  //     });
-  // }
+    this.userProvidedPhotoSRC = URL.createObjectURL(event.target.files[0]);
+    console.log(this.userProvidedPhotoSRC);
+  }
 
-
-  // getDetails() {
-  //   var myHeaders = new Headers();
-  //   myHeaders.append("Authorization", this.token);
-  //   myHeaders.append("Content-Type", "application/json");
-
-  //   var raw = JSON.stringify({
-  //     "task": "getDetails",
-  //     "essentials": {
-  //       "requestId": this.requestId
-  //     }
-  //   });
-
-  //   var requestOptions = {
-  //     method: 'POST',
-  //     headers: myHeaders,
-  //     body: raw,
-  //     redirect: this.redirect
-  //   };
-
-  //   setTimeout(() => {
-  //     fetch("/patrons/" + this.userId + "/digilockers", requestOptions)
-  //       .then(response => {
-  //         if (response.status !== 200) {
-  //           return this.getDetails();
-  //         } else {
-  //           console.log("Get Aadhaar Details (response.json)");
-  //           console.log(response.json());
-  //           return response.json();
-  //         }
-  //       })
-  //       .then(result => {
-  //         this.getDetailsReponse = result.result;
-  //         console.log("Get Aadhaar Details (Result)");
-  //         console.log(this.getDetailsReponse);
-  //         return result;
-  //       });
-  //   }, 1000);
-  // }
-
-  // getEAadhaarDetails() {
-  //   var myHeaders = new Headers();
-  //   myHeaders.append("Authorization", this.token);
-  //   myHeaders.append("Content-Type", "application/json");
-
-  //   var raw = JSON.stringify({
-  //     "task": "getEadhaar",
-  //     "essentials": {
-  //       "requestId": this.requestId
-  //     }
-  //   });
-
-  //   var requestOptions = {
-  //     method: 'POST',
-  //     headers: myHeaders,
-  //     body: raw,
-  //     redirect: this.redirect
-  //   };
-
-  //   setTimeout(() => {
-  //     fetch("/patrons/" + this.userId + "/digilockers", requestOptions)
-  //       .then(response => {
-  //         if (response.status !== 200) {
-  //           return this.getEAadhaarDetails();
-  //         } else {
-  //           console.log("Get EAadhaar Details (response.json)");
-  //           console.log(response.json());
-  //           return response.json();
-  //         }
-  //       })
-  //       .then(result => {
-  //         this.getEAadhaarDetails = result;
-  //         console.log("Get EAadhaar Details (Result)");
-  //         console.log(this.getEAadhaarDetails);
-
-  //         return result;
-  //       });
-  //   }, 1000);
-  // }
 
 
   private readonly getUrlResponse = {

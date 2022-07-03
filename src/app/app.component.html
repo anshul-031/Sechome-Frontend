@@ -21,7 +21,8 @@
 		<input style="padding-left: 50px;" type="file" id="Aadhaar" name="filename">
 	</p>
 	<p><b>Upload Photo </b>
-		<input style="padding-left: 100px;" accept="image/*" type="file" id="photo" name="filename">
+		<input style="padding-left: 100px;" accept="image/*" type="file" id="userProvidedPhoto" name="userProvidedPhoto"
+			(change)="setUserProvidedPhoto($event)" #userProvidedPhoto>
 	</p>
 	<button id="myButton" (click)="openURL()">Proceed</button>
 </div>
@@ -38,11 +39,10 @@
 			<th>Tenant Photo</th>
 			<th>
 				<img src="https://persist.signzy.tech/api/files/256208965/download/532908199c354224af70bf190a35907315b26a684e454216997bda698250a3c7.jpeg"
-					#photo />
+					#displayUserDigilockerPhoto />
 			</th>
 			<th>
-				<img src="https://persist.signzy.tech/api/files/256208965/download/532908199c354224af70bf190a35907315b26a684e454216997bda698250a3c7.jpeg"
-					#photo />
+				<img [src]="userProvidedPhotoSRC" id="displayUserProvidedPhoto" #displayUserProvidedPhoto />
 			</th>
 			<th style="color: green; font-size: 40px;"> 91%</th>
 		</tr>
