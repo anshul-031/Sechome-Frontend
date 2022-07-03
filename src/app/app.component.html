@@ -1,0 +1,57 @@
+<h1 style="text-align: center">Police Tenant Verification Portal<br /><br /></h1>
+<form role="form">
+	<div class="container">
+		<label style="text-align: center" for="aadharNo">Aadhar Number </label>
+		<input style="text-align: center" type="text" class="form-control" id="aadharNo"
+			placeholder="Enter Your Aadhar Number" />
+	</div>
+	<p></p>
+	<div>
+		<div id="object1">
+			<img src="https://miro.medium.com/max/1050/1*ZGWXMiqjVcnuRXdytvgwmA.png" class="center" />
+		</div>
+		<div class="center1" id="object2" style="display: none">
+			<div class="spinner-border"></div>
+		</div>
+	</div>
+</form>
+<p></p>
+<div class="container" id="button">
+	<p><b>Upload Aadhaar Card</b>
+		<input style="padding-left: 50px;" type="file" id="Aadhaar" name="filename">
+	</p>
+	<p><b>Upload Photo </b>
+		<input style="padding-left: 100px;" accept="image/*" type="file" id="photo" name="filename">
+	</p>
+	<button id="myButton" (click)="openURL()">Proceed</button>
+</div>
+
+<div id="data" class="container" style="display: none">
+	<table style="max-width:100%" id="displaytable">
+		<tr>
+			<th> Particulars</th>
+			<th> Digilocker Data</th>
+			<th> User Input Data</th>
+			<th> Verifcation Result</th>
+		</tr>
+		<tr>
+			<th>Tenant Photo</th>
+			<th>
+				<img src="https://persist.signzy.tech/api/files/256208965/download/532908199c354224af70bf190a35907315b26a684e454216997bda698250a3c7.jpeg"
+					#photo />
+			</th>
+			<th>
+				<img src="https://persist.signzy.tech/api/files/256208965/download/532908199c354224af70bf190a35907315b26a684e454216997bda698250a3c7.jpeg"
+					#photo />
+			</th>
+			<th style="color: green; font-size: 40px;"> 91%</th>
+		</tr>
+
+		<tr *ngFor="let user of userDetails.keys()">
+			<th>{{ user }}</th>
+			<th>{{ userDetails.get(user) }}</th>
+			<th>{{ userDetails.get(user) }}</th>
+			<th style="color: green"> Matched</th>
+		</tr>
+	</table>
+</div>
