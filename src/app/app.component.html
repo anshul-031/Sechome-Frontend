@@ -1,10 +1,10 @@
 <h1 style="text-align: center">Police Tenant Verification Portal<br /><br /></h1>
 <form role="form">
-	<div class="container">
+	<!-- <div class="container">
 		<label style="text-align: center" for="aadharNo">Aadhar Number </label>
 		<input style="text-align: center" type="text" class="form-control" id="aadharNo"
 			placeholder="Enter Your Aadhar Number" />
-	</div>
+	</div> -->
 	<p></p>
 	<div>
 		<div id="object1">
@@ -32,7 +32,7 @@
 		<tr>
 			<th> Particulars</th>
 			<th> Digilocker Data</th>
-			<th> User Input Data</th>
+			<th> Details read from Aadhaar card</th>
 			<th> Verifcation Result</th>
 		</tr>
 		<tr>
@@ -42,7 +42,8 @@
 					#displayUserDigilockerPhoto />
 			</th>
 			<th>
-				<img [src]="userProvidedPhotoSRC" id="displayUserProvidedPhoto" #displayUserProvidedPhoto />
+				<img [src]="userProvidedPhotoSRC" id="displayUserProvidedPhoto" width="160" height="200"
+					#displayUserProvidedPhoto />
 			</th>
 			<th style="color: green; font-size: 40px;"> 91%</th>
 		</tr>
@@ -52,6 +53,12 @@
 			<th>{{ userDetails.get(user) }}</th>
 			<th>{{ userDetails.get(user) }}</th>
 			<th style="color: green"> Matched</th>
+		</tr>
+		<tr>
+			<th>Criminal Record</th>
+			<th></th>
+			<th></th>
+			<th style="color: green"> Clean</th>
 		</tr>
 	</table>
 </div>

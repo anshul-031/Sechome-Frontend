@@ -18,6 +18,7 @@ export class AppComponent {
   redirect: RequestRedirect = "follow";
   mode: RequestMode = "cors"
   userProvidedPhotoSRC: any;
+  // userProvidedPhotoSRC: any = "https://sap-my.sharepoint.com/personal/anshul_kumar04_sap_com/Documents/aadhaar_Photo.jpeg";
 
   openURL() {
     this.openDigilockerURL();
@@ -43,7 +44,7 @@ export class AppComponent {
     //Get Details Response
     this.userDetails.set("Pan Number", this.getDetailsReponse.result.files[1].id.substr(-10));
 
-    this.userDetails.set("criminalRecord", "Not Found");
+    // this.userDetails.set("criminalRecord", "Not Found");
 
     var object1 = document.getElementById("object1");
     if (object1) {
