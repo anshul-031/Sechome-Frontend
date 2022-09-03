@@ -21,7 +21,7 @@ export class AppComponent {
   // userProvidedPhotoSRC: any = "https://sap-my.sharepoint.com/personal/anshul_kumar04_sap_com/Documents/aadhaar_Photo.jpeg";
 
   ngOnInit() {
-    this.getLocation();
+    // this.getLocation();
   }
   openURL() {
     this.openDigilockerURL();
@@ -75,6 +75,7 @@ export class AppComponent {
 
 
     this.displayUserProvidedPhoto.nativeElement.src = this.userProvidedPhotoSRC;
+    this.getLocation();
   }
 
   openDigilockerURL() {
