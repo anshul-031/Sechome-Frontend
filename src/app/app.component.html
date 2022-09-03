@@ -7,23 +7,28 @@
 	</div> -->
 	<p></p>
 	<div>
-		<div id="object1">
-			<img src="https://miro.medium.com/max/1050/1*ZGWXMiqjVcnuRXdytvgwmA.png" class="center" />
+		<div id="object1" style="text-align: center;">
+			<video width="320" height="240" autoplay id="video" #video></video>
+			<canvas width="320" height="240" id="canvas" #canvas></canvas>
+			<!-- <img src="https://miro.medium.com/max/1050/1*ZGWXMiqjVcnuRXdytvgwmA.png" class="center" /> -->
 		</div>
 		<div class="center1" id="object2" style="display: none">
 			<div class="spinner-border"></div>
 		</div>
 	</div>
 </form>
-<p></p>
+
 <div class="container" id="button">
+	<button id="start-camera" (click)="startCamera()">Start Camera </button>
+	<button id="click-photo" (click)="clickPhoto()">Click Photo </button>
+	<p></p>
 	<p><b>Upload Aadhaar Card</b>
 		<input style="padding-left: 50px;" type="file" id="Aadhaar" name="filename">
 	</p>
-	<p><b>Upload Photo </b>
+	<!-- <p><b>Upload Photo </b>
 		<input style="padding-left: 100px;" accept="image/*" type="file" id="userProvidedPhoto" name="userProvidedPhoto"
 			(change)="setUserProvidedPhoto($event)" #userProvidedPhoto>
-	</p>
+	</p> -->
 	<button id="myButton" (click)="openURL()">Proceed</button>
 </div>
 
@@ -42,7 +47,7 @@
 					#displayUserDigilockerPhoto />
 			</th>
 			<th>
-				<img [src]="userProvidedPhotoSRC" id="displayUserProvidedPhoto" width="160" height="200"
+				<img [src]="userProvidedPhotoSRC" id="displayUserProvidedPhoto" height="200"
 					#displayUserProvidedPhoto />
 			</th>
 			<th style="color: green; font-size: 40px;"> 91%</th>

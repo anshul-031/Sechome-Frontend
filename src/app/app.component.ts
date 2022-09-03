@@ -11,6 +11,8 @@ export class AppComponent {
   title = 'Sechome';
 
   @ViewChild("displayUserProvidedPhoto") displayUserProvidedPhoto: any;
+  video: any;
+  canvas: any;
 
   digilockerUrl: any;
   requestId: any;
@@ -21,8 +23,24 @@ export class AppComponent {
   // userProvidedPhotoSRC: any = "https://sap-my.sharepoint.com/personal/anshul_kumar04_sap_com/Documents/aadhaar_Photo.jpeg";
 
   ngOnInit() {
-    // this.getLocation();
+    this.video = document.querySelector("#video");
+    this.canvas = document.querySelector("#canvas");
   }
+
+  async startCamera() {
+    let stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
+    this.video.srcObject = stream;
+    console.log("Camera Triggered");
+  }
+  clickPhoto() {
+    if (this.canvas) {
+      this.canvas.getContext('2d').drawImage(this.video, 0, 0, this.canvas.width, this.canvas.height);
+    }
+    let image_data_url = this.canvas.toDataURL('image/jpeg');
+    this.userProvidedPhotoSRC = image_data_url;
+  }
+
+
   openURL() {
     this.openDigilockerURL();
     window.addEventListener('focus', this.triggerAadhaarDetailFetchAPI, false);
@@ -115,22 +133,22 @@ export class AppComponent {
       .catch(error => console.log('error', error));
   }
 
-  setUserProvidedPhoto(event: any) {
-    if (!event.target.files[0] || event.target.files[0].length == 0) {
-      alert('You must select an image');
-      return;
-    }
+  // setUserProvidedPhoto(event: any) {
+  //   if (!event.target.files[0] || event.target.files[0].length == 0) {
+  //     alert('You must select an image');
+  //     return;
+  //   }
 
-    var mimeType = event.target.files[0].type;
+  //   var mimeType = event.target.files[0].type;
 
-    if (mimeType.match(/image\/*/) == null) {
-      alert("Only images are supported");
-      return;
-    }
+  //   if (mimeType.match(/image\/*/) == null) {
+  //     alert("Only images are supported");
+  //     return;
+  //   }
 
-    this.userProvidedPhotoSRC = URL.createObjectURL(event.target.files[0]);
-    console.log(this.userProvidedPhotoSRC);
-  }
+  //   this.userProvidedPhotoSRC = URL.createObjectURL(event.target.files[0]);
+  //   console.log(this.userProvidedPhotoSRC);
+  // }
 
   getLocation() {
     if (navigator.geolocation) {
