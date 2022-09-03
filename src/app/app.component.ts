@@ -13,6 +13,7 @@ export class AppComponent {
   @ViewChild("displayUserProvidedPhoto") displayUserProvidedPhoto: any;
   video: any;
   canvas: any;
+  stream: any;
 
   digilockerUrl: any;
   requestId: any;
@@ -28,8 +29,8 @@ export class AppComponent {
   }
 
   async startCamera() {
-    let stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
-    this.video.srcObject = stream;
+    this.stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
+    this.video.srcObject = this.stream;
     console.log("Camera Triggered");
   }
   clickPhoto() {
@@ -38,6 +39,12 @@ export class AppComponent {
     }
     let image_data_url = this.canvas.toDataURL('image/jpeg');
     this.userProvidedPhotoSRC = image_data_url;
+  }
+
+  stopCamera() {
+    this.stream.getTracks().forEach(function (track: any) {
+      track.stop();
+    });
   }
 
 

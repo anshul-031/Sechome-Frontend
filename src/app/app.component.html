@@ -29,7 +29,7 @@
 		<input style="padding-left: 100px;" accept="image/*" type="file" id="userProvidedPhoto" name="userProvidedPhoto"
 			(change)="setUserProvidedPhoto($event)" #userProvidedPhoto>
 	</p> -->
-	<button id="myButton" (click)="openURL()">Proceed</button>
+	<button id="myButton" (click)="openURL();stopCamera();">Proceed</button>
 </div>
 
 <div id="data" class="container" style="display: none">
