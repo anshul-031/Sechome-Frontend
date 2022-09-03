@@ -8,7 +8,7 @@ import { Component, Injectable, ViewChild } from '@angular/core';
 
 @Injectable()
 export class AppComponent {
-  title = 'sechome';
+  title = 'Sechome';
 
   @ViewChild("displayUserProvidedPhoto") displayUserProvidedPhoto: any;
 
@@ -20,6 +20,9 @@ export class AppComponent {
   userProvidedPhotoSRC: any;
   // userProvidedPhotoSRC: any = "https://sap-my.sharepoint.com/personal/anshul_kumar04_sap_com/Documents/aadhaar_Photo.jpeg";
 
+  ngOnInit() {
+    this.getLocation();
+  }
   openURL() {
     this.openDigilockerURL();
     window.addEventListener('focus', this.triggerAadhaarDetailFetchAPI, false);
@@ -128,6 +131,17 @@ export class AppComponent {
     console.log(this.userProvidedPhotoSRC);
   }
 
+  getLocation() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(this.showPosition);
+    } else {
+      console.log("Geolocation is not supported by this browser.");
+    }
+  }
+  showPosition(position: any) {
+    alert("Latitude: " + position.coords.latitude +
+      "\nLongitude: " + position.coords.longitude);
+  }
 
 
   private readonly getUrlResponse = {
