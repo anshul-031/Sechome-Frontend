@@ -165,8 +165,12 @@ export class AppComponent {
     }
   }
   showPosition(position: any) {
-    alert("Latitude: " + position.coords.latitude +
-      "\nLongitude: " + position.coords.longitude);
+    var latlongvalue = position.coords.latitude + "," + position.coords.longitude;
+    var img_url = "https://maps.googleapis.com/maps/api/staticmap?center=" + latlongvalue + "&amp;zoom=14&amp;size=400x300&amp;key=AIzaSyAa8HeLH2lQMbPeOiMlM9D1VxZ7pbGQq8o";
+    let map = document.getElementById("mapholder");
+    if (map) {
+      map.innerHTML = `<p><b>Current Location: ${latlongvalue}</b></p><img src='${img_url}'>`;
+    }
   }
 
 
