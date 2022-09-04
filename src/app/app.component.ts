@@ -168,8 +168,11 @@ export class AppComponent {
     var latlongvalue = position.coords.latitude + "," + position.coords.longitude;
     var img_url = "https://maps.googleapis.com/maps/api/staticmap?center=" + latlongvalue + "&amp;zoom=14&amp;size=400x300&amp;key=AIzaSyAa8HeLH2lQMbPeOiMlM9D1VxZ7pbGQq8o";
     let map = document.getElementById("mapholder");
+    let googleMapDirectionUrl = "https://www.google.com/maps/dir/29.865191,77.893944/29.868071,77.894844/@29.8667492,77.893107,17z/data=!3m1!4b1!4m13!1m7!3m6!1s0x0:0x54b7207a8f3ecf4f!2zMjnCsDUyJzA1LjEiTiA3N8KwNTMnNDEuNCJF!3b1!8m2!3d29.868071!4d77.894844!4m4!1m1!4e1!1m0!3e2"
     if (map) {
-      map.innerHTML = `<p><b>Current Location: ${latlongvalue}</b></p><img src='${img_url}'>`;
+      map.innerHTML =
+        `<p><b>Current Location: ${latlongvalue} </b><button onclick="window.open('${googleMapDirectionUrl}','_blank')">Get Directions</button></p>
+        <img src='${img_url}'>`;
     }
   }
 
