@@ -104,19 +104,25 @@ export class AppComponent {
   }
 
   openDigilockerURL() {
-    var requestOptions = {
-      method: 'GET',
-      redirect: this.redirect,
-      mode: this.mode
-    };
-    fetch("/sechome/geturl", requestOptions)
-      .then(response => response.json())
-      .then(result => {
-        this.digilockerUrl = result.result.url;
-        this.requestId = result.result.requestId;
-        window.open(this.digilockerUrl, "_blank");
-      })
-      .catch(error => console.log('error', error));
+    // Calling the Get digilockerUrl API
+    // var requestOptions = {
+    //   method: 'GET',
+    //   redirect: this.redirect,
+    //   mode: this.mode
+    // };
+    // fetch("/sechome/geturl", requestOptions)
+    //   .then(response => response.json())
+    //   .then(result => {
+    //     this.digilockerUrl = result.result.url;
+    //     this.requestId = result.result.requestId;
+    //     window.open(this.digilockerUrl, "_blank");
+    //   })
+    //   .catch(error => console.log('error', error));
+
+    // Hardcoding digilocker URL
+    this.digilockerUrl = this.getUrlResponse.result.url;
+    this.requestId = this.getUrlResponse.result.requestId;
+    window.open(this.digilockerUrl, "_blank");
   }
 
   getdata() {
@@ -168,8 +174,8 @@ export class AppComponent {
     var latlongvalue = position.coords.latitude + "," + position.coords.longitude;
     var img_url = "https://maps.googleapis.com/maps/api/staticmap?center=" + latlongvalue + "&amp;zoom=14&amp;size=400x300&amp;key=AIzaSyAa8HeLH2lQMbPeOiMlM9D1VxZ7pbGQq8o";
     let map = document.getElementById("mapholder");
-    let googleMapDirectionUrl = "https://www.google.com/maps/search/?api=1&query=" + latlongvalue;
-    // let googleMapDirectionUrl = "https://www.google.com/maps/dir/29.868071,77.894844/29.865191,77.893944/@29.8661524,77.8933685,17.12z/data=!4m5!4m4!1m0!1m1!4e1!3e2";
+    // let googleMapDirectionUrl = "https://www.google.com/maps/search/?api=1&query=" + latlongvalue;
+    let googleMapDirectionUrl = "https://www.google.com/maps/dir/29.868071,77.894844/29.865191,77.893944";
     if (map) {
       map.innerHTML =
         `<p><b>Current Location: ${latlongvalue} </b><button onclick="window.open('${googleMapDirectionUrl}','_blank')">Get Directions</button></p>
