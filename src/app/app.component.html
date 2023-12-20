@@ -7,36 +7,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Police Tenant Verification Portal</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-  <style>
-    #object1 {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 60vh;
-    }
-
-    #object1 video {
-      border-radius: 8px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      background-color: white;
-      background-image: url("https://www.creativefabrica.com/wp-content/uploads/2020/04/23/Camera-Icon-Graphics-3939285-1-580x435.jpg");
-      background-position: center;
-      background-repeat: no-repeat;
-      background-size: cover;
-      position: relative;
-    }
-
-    #object1 canvas {
-      border-radius: 8px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      background-color: white;
-      background-image: url("https://cdn-icons-png.flaticon.com/512/4042/4042171.png");
-      background-position: center;
-      background-repeat: no-repeat;
-      background-size: cover;
-      position: relative;
-    }
-  </style>
 </head>
 
 <body class="bg-gray-100">
@@ -51,13 +21,10 @@
       <video width="320" class="m-2 h-64" autoplay id="video" #video></video>
       <canvas width="320" height="255" id="canvas" #canvas></canvas>
     </div>
-    <div class="center1" id="object2" style="display: none">
-      <div class="spinner-border"></div>
-    </div>
   </div>
 
 
-  <div class="container mx-auto my-8">
+  <div class="container mx-auto my-8" id="object2">
     <button class="bg-blue-500 m-2 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" id="start-camera"
       (click)="startCamera()">Start Camera</button>
     <button class="bg-blue-500 m-2 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" id="click-photo"
@@ -110,53 +77,13 @@
         <th style="color: green"> Matched</th>
       </tr>
       <tr>
-        <th>Criminal Record Status from CCTNS/NCRB/ICJS</th>
+        <th>Criminal Record Status (Alert Level)</th>
         <th></th>
         <th></th>
-        <th style="color: green"> Clean</th>
+        <th style="color: red"> Very High</th>
       </tr>
     </table>
     <div style="text-align: center;" id="mapholder"></div>
-    <!-- <h1 style="text-align: center"><br /><br />Travel History</h1>
-    <table style="max-width:100%" id="displaytable">
-      <tr>
-        <th> NAME</th>
-        <th> Date</th>
-        <th> Location</th>
-        <th> Nearest Police Station</th>
-      </tr>
-      <tr>
-        <th> ANSHUL KUMAR</th>
-        <th> 1 APRIL 2022</th>
-        <th> 28.8265,78.2337</th>
-        <th> Powai Police Station, Mumbai, MH</th>
-      </tr>
-      <tr>
-        <th> ANSHUL KUMAR</th>
-        <th> 10 APRIL 2022</th>
-        <th> 28.9255,78.6327</th>
-        <th> Mulund Police Station, Mumbai, MH</th>
-      </tr>
-      <tr>
-        <th> ANSHUL KUMAR</th>
-        <th> 14 APRIL 2022</th>
-        <th> 28.7275,78.1307</th>
-        <th> Parkville Police Station, Mumbai, MH</th>
-      </tr>
-      <tr>
-        <th> ANSHUL KUMAR</th>
-        <th> 18 APRIL 2022</th>
-        <th> 28.9695,78.3387</th>
-        <th> Kanjurmarg Police Station, Mumbai, MH</th>
-      </tr>
-      <tr>
-        <th> ANSHUL KUMAR</th>
-        <th> 24 APRIL 2022</th>
-        <th> 28.6232,78.1317</th>
-        <th> Dadar Police Station, Mumbai, MH</th>
-      </tr>
-
-    </table> -->
     <h1 style="color: green">Crime Check Verification Report</h1>
     <div style="display: flex;justify-content: center;">
       <object data="./../assets/crimeCheckReports/InstantReportIndividual.pdf" width="800" height="500">
