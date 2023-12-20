@@ -32,3 +32,32 @@ th {
 tr:nth-child(even) {
 	background-color: #dddddd;
 }
+
+#object1 {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 60vh;
+  }
+
+  #object1 video {
+	border-radius: 8px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	background-color: white;
+	background-image: url("https://www.creativefabrica.com/wp-content/uploads/2020/04/23/Camera-Icon-Graphics-3939285-1-580x435.jpg");
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	position: relative;
+  }
+
+  #object1 canvas {
+	border-radius: 8px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	background-color: white;
+	background-image: url("https://cdn-icons-png.flaticon.com/512/4042/4042171.png");
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	position: relative;
+  }
