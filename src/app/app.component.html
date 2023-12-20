@@ -45,19 +45,16 @@
     <span class="text-black font-bold text-lg">Police Tenant Verification Portal </span>
   </nav>
 
-
-
-
-    <p></p>
-    <div class="container mx-auto">
-      <div id="object1" class=" flex-row">
-        <video width="320" class="m-2 h-64" autoplay id="video" #video></video>
-        <canvas width="320" height="255" id="canvas" #canvas></canvas>
-      </div>
-      <div class="center1" id="object2" style="display: none">
-        <div class="spinner-border"></div>
-      </div>
+  <p></p>
+  <div class="container mx-auto">
+    <div id="object1" class=" flex-row">
+      <video width="320" class="m-2 h-64" autoplay id="video" #video></video>
+      <canvas width="320" height="255" id="canvas" #canvas></canvas>
     </div>
+    <div class="center1" id="object2" style="display: none">
+      <div class="spinner-border"></div>
+    </div>
+  </div>
 
 
   <div class="container mx-auto my-8">
@@ -68,16 +65,17 @@
 
     <div class="container mx-auto mt-4 p-8 bg-white shadow-lg rounded-lg max-w-md">
       <div class="mb-4">
-        <label class="block text-gray-700 font-bold mb-2">Upload Aadhaar Card</label>
-        <div class="relative">
-          <input
-            class="appearance-none border border-gray-300 rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
-            type="file" id="Aadhaar" name="filename">
-          <span class="ml-3 absolute inset-y-0 right-0 flex items-center">
-            <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" id="myButton"
-              (click)="openURL();stopCamera();">Proceed</button>
-          </span>
-        </div>
+        <label class="block text-gray-700 font-bold mb-2">Upload Aadhaar Card
+          <div class="relative">
+            <input
+              class="appearance-none border border-gray-300 rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
+              type="file" accept="application/pdf" id="Aadhaar" name="filename">
+            <span class="ml-3 absolute inset-y-0 right-0 flex items-center">
+              <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" id="myButton"
+                (click)="openURL();stopCamera();">Proceed</button>
+            </span>
+          </div>
+        </label>
       </div>
 
 
@@ -95,12 +93,12 @@
       <tr>
         <th>Tenant Photo</th>
         <th>
-          <img src="https://persist.signzy.tech/api/files/256208965/download/532908199c354224af70bf190a35907315b26a684e454216997bda698250a3c7.jpeg"
+          <img
+            src="https://persist.signzy.tech/api/files/256208965/download/532908199c354224af70bf190a35907315b26a684e454216997bda698250a3c7.jpeg"
             #displayUserDigilockerPhoto />
         </th>
         <th>
-          <img [src]="userProvidedPhotoSRC" id="displayUserProvidedPhoto" height="200"
-            #displayUserProvidedPhoto />
+          <img [src]="userProvidedPhotoSRC" id="displayUserProvidedPhoto" height="200" #displayUserProvidedPhoto />
         </th>
         <th style="color: green; font-size: 40px;"> 91%</th>
       </tr>
@@ -160,9 +158,10 @@
 
     </table> -->
     <h1 style="color: green">Crime Check Verification Report</h1>
-    <object data="./../assets/crimeCheckReports/InstantReportIndividual.pdf" width="800"
-      height="500">
-    </object>
+    <div style="display: flex;justify-content: center;">
+      <object data="./../assets/crimeCheckReports/InstantReportIndividual.pdf" width="800" height="500">
+      </object>
+    </div>
   </div>
 </body>
 
