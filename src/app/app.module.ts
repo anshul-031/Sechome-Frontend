@@ -3,23 +3,18 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-// import { HttpClient } from '@angular/common/http';
-import { HttpClient, HttpClientModule, HttpClientXsrfModule } from "@angular/common/http";
-
+import { VerificationComponent } from './verification/verification.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    VerificationComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
-    BrowserAnimationsModule
+    AppRoutingModule
   ],
-  providers: [HttpClient],
+  providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule {
-}
+export class AppModule { }
