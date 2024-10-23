@@ -5,7 +5,9 @@ import { AppComponent } from './app.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { VerificationComponent } from './verification/verification.component';
+import { NO_ERRORS_SCHEMA } from '@angular/core'; // Import NO_ERRORS_SCHEMA
 import { HeaderComponent } from './components/shared/header.component'; // Import HeaderComponent
 
 @NgModule({
@@ -14,14 +16,17 @@ import { HeaderComponent } from './components/shared/header.component'; // Impor
     LandingPageComponent,
     LoginComponent,
     SignupComponent,
-    HeaderComponent // Declare HeaderComponent
+    HeaderComponent,
+    VerificationComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent],
+  schemas: [NO_ERRORS_SCHEMA] // Use NO_ERRORS_SCHEMA
 })
 export class AppModule { }
