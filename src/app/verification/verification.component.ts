@@ -205,7 +205,7 @@ export class VerificationComponent {
     "patronId": "6197e6856475d597bf33a08a",
     "task": "getEadhaar",
     "result": {
-      "name": "ANSHUL KUMAR",
+      "name": "ANSHUL GOEL",
       "uid": "xxxxxxxx2433",
       "dob": "31/05/1996",
       "gender": "MALE",
@@ -257,28 +257,28 @@ export class VerificationComponent {
         },
         "validAadhaarDSC": "yes"
       },
-      "address": "S/O VIJAY KUMAR GOEL 72/436, AGARSAIN VIHAR JANSATH ROAD MUZAFFARNAGAR MUZAFFARNAGAR UTTAR PRADESH 251002",
+      "address": "86/932, POWAI JANSATH ROAD NAGPUR MAHARASHTRA 410035",
       "photo": "https://persist.signzy.tech/api/files/256208965/download/532908199c354224af70bf190a35907315b26a684e454216997bda698250a3c7.jpeg",
       "splitAddress": {
         "district": [
-          "MUZAFFARNAGAR"
+          "NAGPUR"
         ],
         "state": [
           [
-            "UTTAR PRADESH",
-            "UP"
+            "MAHARASHTRA",
+            "MH"
           ]
         ],
         "city": [
-          "MUZAFFARNAGAR"
+          "NAGPUR"
         ],
-        "pincode": "251002",
+        "pincode": "410035",
         "country": [
           "IN",
           "IND",
           "INDIA"
         ],
-        "addressLine": "S/O VIJAY KUMAR GOEL JANSATH ROAD"
+        "addressLine": "23/987 JANSATH ROAD"
       }
     }
   };
@@ -292,8 +292,8 @@ export class VerificationComponent {
     "result": {
       "userDetails": {
         "digilockerid": "d955f2b9-fe3b-52f7-bd7f-b3bcdca9069c",
-        "name": "Anshul Kumar",
-        "dob": "31/05/1996",
+        "name": "Anshul Goel",
+        "dob": "31/05/1994",
         "gender": "M",
         "eaadhaar": "Y"
       },
@@ -328,7 +328,7 @@ export class VerificationComponent {
         "description": "PAN Verification Record",
         "issuerid": "in.gov.pan",
         "issuer": "Income Tax Department",
-        "id": "in.gov.pan-PANCR-DOVPK3425M"
+        "id": "in.gov.pan-PANCR-DOVPG7485M"
       }
       ]
     }
