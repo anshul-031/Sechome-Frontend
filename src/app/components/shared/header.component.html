@@ -1,0 +1,11 @@
+<header class="main-header">
+    <div class="container">
+      <div class="header-content">
+        <a routerLink="/" class="brand">Sechome</a>
+        <nav *ngIf="!isLoggedIn">
+          <a routerLink="/login" class="nav-link">Login</a>
+          <a routerLink="/signup" class="nav-link">Sign Up</a>
+        </nav>
+      </div>
+    </div>
+  </header>
