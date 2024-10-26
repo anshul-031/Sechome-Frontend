@@ -1,4 +1,5 @@
-import { Component, Injectable, ViewChild } from '@angular/core';
+import { Component, ElementRef, Injectable, OnInit, ViewChild } from '@angular/core';
+import { AadhaarImage } from './verification.interface';
 
 @Component({
   selector: 'app-verification',
@@ -7,7 +8,203 @@ import { Component, Injectable, ViewChild } from '@angular/core';
 })
 
 @Injectable()
-export class VerificationComponent {
+export class VerificationComponent implements OnInit{
+
+  @ViewChild('selfieVideo') selfieVideo!: ElementRef<HTMLVideoElement>;
+  @ViewChild('selfieCanvas') selfieCanvas!: ElementRef<HTMLCanvasElement>;
+  @ViewChild('aadhaarVideo') aadhaarVideo!: ElementRef<HTMLVideoElement>;
+  @ViewChild('aadhaarCanvas') aadhaarCanvas!: ElementRef<HTMLCanvasElement>;
+
+  isSelfieOpen = false;
+  isAadhaarCameraOpen: boolean[] = [false, false];
+  selfieCaptured: string | null = null;
+  selfieStream: MediaStream | null = null;
+  aadhaarStream: MediaStream | null = null;
+  aadhaarMethod: 'upload' | 'photo' = 'upload';
+  showBothSides = false;
+  aadhaarImages: AadhaarImage[] = [{}, {}];
+
+  ngOnInit(): void {}
+
+  getSides(): string[] {
+    return this.showBothSides ? ['Front', 'Back'] : ['Front'];
+  }
+
+  toggleBothSides(): void {
+    this.showBothSides = !this.showBothSides;
+    if (!this.showBothSides) {
+      this.aadhaarImages[1] = {};
+    }
+  }
+
+  setAadhaarMethod(method: 'upload' | 'photo'): void {
+    this.aadhaarMethod = method;
+    this.aadhaarImages = [{}, {}];
+    this.stopAllCameras();
+  }
+
+  async startSelfieCamera(): Promise<void> {
+    try {
+      this.selfieStream = await navigator.mediaDevices.getUserMedia({ 
+        video: { 
+          facingMode: 'user',
+          width: { ideal: 1280 },
+          height: { ideal: 720 }
+        } 
+      });
+      this.selfieVideo.nativeElement.srcObject = this.selfieStream;
+      this.selfieVideo.nativeElement.play();
+      this.isSelfieOpen = true;
+    } catch (err) {
+      console.error('Error accessing camera:', err);
+      alert('Unable to access camera. Please ensure you have granted camera permissions.');
+    }
+  }
+
+  async startAadhaarCamera(index: number): Promise<void> {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ 
+        video: { 
+          facingMode: 'environment',
+          width: { ideal: 1280 },
+          height: { ideal: 720 }
+        } 
+      });
+      
+      const video = document.getElementById(`aadhaarVideo${index}`) as HTMLVideoElement;
+      video.srcObject = stream;
+      video.play();
+      
+      this.aadhaarStream = stream;
+      this.isAadhaarCameraOpen[index] = true;
+    } catch (err) {
+      console.error('Error accessing camera:', err);
+      alert('Unable to access camera. Please ensure you have granted camera permissions.');
+    }
+  }
+
+  captureSelfie(): void {
+    const video = this.selfieVideo.nativeElement;
+    const canvas = this.selfieCanvas.nativeElement;
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+    
+    const context = canvas.getContext('2d');
+    if (context) {
+      context.drawImage(video, 0, 0, canvas.width, canvas.height);
+      this.selfieCaptured = canvas.toDataURL('image/jpeg');
+      this.stopSelfieCamera();
+    }
+  }
+
+  captureAadhaar(index: number): void {
+    const video = document.getElementById(`aadhaarVideo${index}`) as HTMLVideoElement;
+    const canvas = document.getElementById(`aadhaarCanvas${index}`) as HTMLCanvasElement;
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+    
+    const context = canvas.getContext('2d');
+    if (context) {
+      context.drawImage(video, 0, 0, canvas.width, canvas.height);
+      this.aadhaarImages[index].captured = canvas.toDataURL('image/jpeg');
+      this.stopAadhaarCamera(index);
+    }
+  }
+
+  stopSelfieCamera(): void {
+    if (this.selfieStream) {
+      this.selfieStream.getTracks().forEach(track => track.stop());
+      this.selfieStream = null;
+    }
+    this.isSelfieOpen = false;
+  }
+
+  stopAadhaarCamera(index: number): void {
+    if (this.aadhaarStream) {
+      this.aadhaarStream.getTracks().forEach(track => track.stop());
+      this.aadhaarStream = null;
+    }
+    this.isAadhaarCameraOpen[index] = false;
+  }
+
+  stopAllCameras(): void {
+    this.stopSelfieCamera();
+    this.isAadhaarCameraOpen.forEach((_, index) => this.stopAadhaarCamera(index));
+  }
+
+  retakeSelfie(): void {
+    this.selfieCaptured = null;
+    this.startSelfieCamera();
+  }
+
+  retakeAadhaar(index: number): void {
+    this.aadhaarImages[index] = {};
+    this.startAadhaarCamera(index);
+  }
+
+  onFileSelected(event: Event, index: number): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files[0]) {
+      const file = input.files[0];
+      const validTypes = ['image/jpeg', 'image/png', 'image/jpg'];
+      
+      if (validTypes.includes(file.type)) {
+        this.aadhaarImages[index].file = file;
+        
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          this.aadhaarImages[index].preview = e.target?.result as string;
+        };
+        reader.readAsDataURL(file);
+      } else {
+        alert('Please select a valid image file (JPG, JPEG, or PNG)');
+        input.value = '';
+        this.aadhaarImages[index] = {};
+      }
+    }
+  }
+
+  isSubmitEnabled(): boolean {
+    const hasSelfie = !!this.selfieCaptured;
+    const requiredImages = this.showBothSides ? 2 : 1;
+    
+    if (this.aadhaarMethod === 'upload') {
+      const validUploads = this.aadhaarImages
+        .slice(0, requiredImages)
+        .every(img => !!img.file && !!img.preview);
+      return hasSelfie && validUploads;
+    } else {
+      const validCaptures = this.aadhaarImages
+        .slice(0, requiredImages)
+        .every(img => !!img.captured);
+      return hasSelfie && validCaptures;
+    }
+  }
+
+  submitVerification(): void {
+    if (this.isSubmitEnabled()) {
+      const verificationData = {
+        selfie: this.selfieCaptured,
+        aadhaarMethod: this.aadhaarMethod,
+        aadhaarImages: this.aadhaarImages.slice(0, this.showBothSides ? 2 : 1)
+      };
+      console.log('Submitting verification:', verificationData);
+      this.openURL();
+      }
+  }
+
+  ngOnDestroy(): void {
+    this.stopAllCameras();
+  }
+
+
+
+
+
+
+
+
+
   title = 'Sechome';
 
   @ViewChild("displayUserProvidedPhoto") displayUserProvidedPhoto: any;
@@ -23,10 +220,10 @@ export class VerificationComponent {
   userProvidedPhotoSRC: any;
   // userProvidedPhotoSRC: any = "https://sap-my.sharepoint.com/personal/anshul_kumar04_sap_com/Documents/aadhaar_Photo.jpeg";
 
-  ngOnInit() {
-    this.video = document.querySelector("#video");
-    this.canvas = document.querySelector("#canvas");
-  }
+  // ngOnInit() {
+  //   this.video = document.querySelector("#video");
+  //   this.canvas = document.querySelector("#canvas");
+  // }
 
   async startCamera() {
     this.stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });

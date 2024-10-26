@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -7,9 +7,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Police Tenant Verification Portal</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-</head>
+</head> -->
 
-<body class="bg-gray-100">
+<!-- <body class="bg-gray-100">
 
   <nav class="bg-white p-4 rounded-4xl text-center fixed w-full top-0">
     <span class="text-black font-bold text-lg">Police Tenant Verification Portal </span>
@@ -47,7 +47,127 @@
 
 
     </div>
+  </div> -->
+
+  <div class="container" id="object2">
+    <h2>Verification</h2>
+    
+    <div class="camera-section">
+      <h3>Take Selfie</h3>
+      <div class="camera-container">
+        <video #selfieVideo [hidden]="!isSelfieOpen" class="camera-preview"></video>
+        <canvas #selfieCanvas [hidden]="true"></canvas>
+        <img [src]="selfieCaptured" *ngIf="selfieCaptured" class="captured-image" alt="Captured selfie">
+      </div>
+      <div class="button-group">
+        <button (click)="startSelfieCamera()" *ngIf="!isSelfieOpen" class="btn">Open Camera</button>
+        <button (click)="captureSelfie()" *ngIf="isSelfieOpen" class="btn">Capture Selfie</button>
+        <button (click)="retakeSelfie()" *ngIf="selfieCaptured" class="btn">Retake Selfie</button>
+      </div>
+    </div>
+
+    <div class="aadhaar-section">
+      <h3>Aadhaar Verification</h3>
+      <div class="option-selector">
+        <button 
+          [class]="'option-btn ' + (aadhaarMethod === 'upload' ? 'active' : '')"
+          (click)="setAadhaarMethod('upload')">
+          Upload Aadhaar
+        </button>
+        <button 
+          [class]="'option-btn ' + (aadhaarMethod === 'photo' ? 'active' : '')"
+          (click)="setAadhaarMethod('photo')">
+          Take Photo
+        </button>
+      </div>
+
+      <div class="side-selector">
+        <label>
+          <input 
+            type="checkbox" 
+            [checked]="showBothSides" 
+            (change)="toggleBothSides()">
+          Upload both sides of Aadhaar card
+        </label>
+      </div>
+
+      <ng-container *ngIf="aadhaarMethod === 'upload'">
+        <div class="upload-section" *ngFor="let side of getSides(); let i = index">
+          <h4>{{ side }} Side</h4>
+          <p class="file-hint">Accepted formats: PDF, JPG, PNG, JPEG</p>
+          <div class="file-upload">
+            <input 
+              type="file" 
+              [id]="'fileInput' + i"
+              accept=".jpg,.jpeg,.png,image/jpeg,image/png"
+              (change)="onFileSelected($event, i)"
+              class="file-input">
+            <div class="file-preview" *ngIf="aadhaarImages[i]?.file">
+              <div class="file-info">
+                <span>Selected file: {{aadhaarImages[i].file?.name}}</span>
+                <span class="file-type">({{aadhaarImages[i].file?.type}})</span>
+              </div>
+              <img 
+                *ngIf="aadhaarImages[i]?.preview" 
+                [src]="aadhaarImages[i].preview" 
+                class="document-preview" 
+                [alt]="side + ' preview'">
+            </div>
+          </div>
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf="aadhaarMethod === 'photo'">
+        <div class="camera-section" *ngFor="let side of getSides(); let i = index">
+          <h4>{{ side }} Side</h4>
+          <div class="camera-container">
+            <video 
+              [id]="'aadhaarVideo' + i"
+              #aadhaarVideo 
+              [hidden]="!isAadhaarCameraOpen[i]" 
+              class="camera-preview">
+            </video>
+            <canvas [id]="'aadhaarCanvas' + i" #aadhaarCanvas [hidden]="true"></canvas>
+            <img 
+              [src]="aadhaarImages[i]?.captured" 
+              *ngIf="aadhaarImages[i]?.captured" 
+              class="captured-image" 
+              [alt]="'Captured Aadhaar ' + side">
+          </div>
+          <div class="button-group">
+            <button 
+              (click)="startAadhaarCamera(i)" 
+              *ngIf="!isAadhaarCameraOpen[i] && !aadhaarImages[i]?.captured" 
+              class="btn">
+              Open Camera
+            </button>
+            <button 
+              (click)="captureAadhaar(i)" 
+              *ngIf="isAadhaarCameraOpen[i]" 
+              class="btn">
+              Capture {{ side }}
+            </button>
+            <button 
+              (click)="retakeAadhaar(i)" 
+              *ngIf="aadhaarImages[i]?.captured" 
+              class="btn">
+              Retake {{ side }}
+            </button>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+
+    <button 
+      (click)="submitVerification()" 
+      [disabled]="!isSubmitEnabled()"
+      class="btn submit-btn">
+      Submit Verification
+    </button>
   </div>
+<!-- </div> -->
+
+
 
   <div id="data" class="container" style="display: none">
     <table style="max-width:100%" id="displaytable">
@@ -415,6 +535,6 @@
 </table>
 
   </div>
-</body>
+<!-- </body>
 
-</html>
+</html> -->
