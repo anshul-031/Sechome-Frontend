@@ -17,7 +17,7 @@ export class VerificationComponent implements OnInit{
 
   isSelfieOpen = false;
   isAadhaarCameraOpen: boolean[] = [false, false];
-  selfieCaptured: string | null = null;
+  userProvidedPhotoSRC: string | null = null;
   selfieStream: MediaStream | null = null;
   aadhaarStream: MediaStream | null = null;
   aadhaarMethod: 'upload' | 'photo' = 'upload';
@@ -92,7 +92,7 @@ export class VerificationComponent implements OnInit{
     const context = canvas.getContext('2d');
     if (context) {
       context.drawImage(video, 0, 0, canvas.width, canvas.height);
-      this.selfieCaptured = canvas.toDataURL('image/jpeg');
+      this.userProvidedPhotoSRC = canvas.toDataURL('image/jpeg');
       this.stopSelfieCamera();
     }
   }
@@ -133,7 +133,7 @@ export class VerificationComponent implements OnInit{
   }
 
   retakeSelfie(): void {
-    this.selfieCaptured = null;
+    this.userProvidedPhotoSRC = null;
     this.startSelfieCamera();
   }
 
@@ -146,7 +146,7 @@ export class VerificationComponent implements OnInit{
     const input = event.target as HTMLInputElement;
     if (input.files && input.files[0]) {
       const file = input.files[0];
-      const validTypes = ['image/jpeg', 'image/png', 'image/jpg'];
+      const validTypes = ['image/jpeg', 'image/png', 'image/jpg', 'application/pdf'];
       
       if (validTypes.includes(file.type)) {
         this.aadhaarImages[index].file = file;
@@ -157,7 +157,7 @@ export class VerificationComponent implements OnInit{
         };
         reader.readAsDataURL(file);
       } else {
-        alert('Please select a valid image file (JPG, JPEG, or PNG)');
+        alert('Please select a valid image or PDF file (JPG, JPEG, PNG, or PDF)');
         input.value = '';
         this.aadhaarImages[index] = {};
       }
@@ -165,7 +165,7 @@ export class VerificationComponent implements OnInit{
   }
 
   isSubmitEnabled(): boolean {
-    const hasSelfie = !!this.selfieCaptured;
+    const hasSelfie = !!this.userProvidedPhotoSRC;
     const requiredImages = this.showBothSides ? 2 : 1;
     
     if (this.aadhaarMethod === 'upload') {
@@ -184,7 +184,7 @@ export class VerificationComponent implements OnInit{
   submitVerification(): void {
     if (this.isSubmitEnabled()) {
       const verificationData = {
-        selfie: this.selfieCaptured,
+        selfie: this.userProvidedPhotoSRC,
         aadhaarMethod: this.aadhaarMethod,
         aadhaarImages: this.aadhaarImages.slice(0, this.showBothSides ? 2 : 1)
       };
@@ -217,7 +217,7 @@ export class VerificationComponent implements OnInit{
   userDetails: any = new Map();
   redirect: RequestRedirect = "follow";
   mode: RequestMode = "cors"
-  userProvidedPhotoSRC: any;
+  // userProvidedPhotoSRC: any;
   // userProvidedPhotoSRC: any = "https://sap-my.sharepoint.com/personal/anshul_kumar04_sap_com/Documents/aadhaar_Photo.jpeg";
 
   // ngOnInit() {

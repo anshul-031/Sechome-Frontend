@@ -1,55 +1,4 @@
-<!-- <!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Police Tenant Verification Portal</title>
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-</head> -->
-
-<!-- <body class="bg-gray-100">
-
-  <nav class="bg-white p-4 rounded-4xl text-center fixed w-full top-0">
-    <span class="text-black font-bold text-lg">Police Tenant Verification Portal </span>
-  </nav>
-
-  <p></p>
-  <div class="container mx-auto">
-    <div id="object1" class=" flex-row">
-      <video width="320" class="m-2 h-64" autoplay id="video" #video></video>
-      <canvas width="320" height="255" id="canvas" #canvas></canvas>
-    </div>
-  </div>
-
-
-  <div class="container mx-auto my-8" id="object2">
-    <button class="bg-blue-500 m-2 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" id="start-camera"
-      (click)="startCamera()">Start Camera</button>
-    <button class="bg-blue-500 m-2 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" id="click-photo"
-      (click)="clickPhoto()">Click Photo</button>
-
-    <div class="container mx-auto mt-4 p-8 bg-white shadow-lg rounded-lg max-w-md">
-      <div class="mb-4">
-        <label class="block text-gray-700 font-bold mb-2">Upload Aadhaar Card
-          <div class="relative">
-            <input
-              class="appearance-none border border-gray-300 rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow-outline"
-              type="file" accept="application/pdf" id="Aadhaar" name="filename">
-            <span class="ml-3 absolute inset-y-0 right-0 flex items-center">
-              <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" id="myButton"
-                (click)="openURL();stopCamera();">Proceed</button>
-            </span>
-          </div>
-        </label>
-      </div>
-
-
-    </div>
-  </div> -->
-
-  <div class="container" id="object2">
+<div class="container" id="object2">
     <h2>Verification</h2>
     
     <div class="camera-section">
@@ -57,12 +6,12 @@
       <div class="camera-container">
         <video #selfieVideo [hidden]="!isSelfieOpen" class="camera-preview"></video>
         <canvas #selfieCanvas [hidden]="true"></canvas>
-        <img [src]="selfieCaptured" *ngIf="selfieCaptured" class="captured-image" alt="Captured selfie">
+        <img [src]="userProvidedPhotoSRC" *ngIf="userProvidedPhotoSRC" class="captured-image" alt="Captured selfie">
       </div>
       <div class="button-group">
         <button (click)="startSelfieCamera()" *ngIf="!isSelfieOpen" class="btn">Open Camera</button>
         <button (click)="captureSelfie()" *ngIf="isSelfieOpen" class="btn">Capture Selfie</button>
-        <button (click)="retakeSelfie()" *ngIf="selfieCaptured" class="btn">Retake Selfie</button>
+        <button (click)="retakeSelfie()" *ngIf="userProvidedPhotoSRC" class="btn">Retake Selfie</button>
       </div>
     </div>
 
@@ -99,7 +48,7 @@
             <input 
               type="file" 
               [id]="'fileInput' + i"
-              accept=".jpg,.jpeg,.png,image/jpeg,image/png"
+              accept=".jpg,.jpeg,.png,.pdf,image/jpeg,image/png,application/pdf"
               (change)="onFileSelected($event, i)"
               class="file-input">
             <div class="file-preview" *ngIf="aadhaarImages[i]?.file">
@@ -167,7 +116,7 @@
   </div>
 <!-- </div> -->
 
-
+  
 
   <div id="data" class="container" style="display: none">
     <table style="max-width:100%" id="displaytable">
@@ -255,15 +204,16 @@
 
       <tr>
         <td>Civil Courts - Junior Civil Court, Senior Civil Court, District Court</td>
-        <td>All district court civil matters, relating to property, civil rights, specific relief, tortious liabilities,
-          damages, testamentary wills & titles.</td>
+        <td>All district court civil matters, relating to property, civil rights, specific relief, tortious
+          liabilities,
+          damages, testamentary wills and titles.</td>
         <td>2000
         </td>
         <td>12 Case found</td>
       </tr>
 
       <tr>
-        <td>Criminal Courts - Magistrate courts & Session courts</td>
+        <td>Criminal Courts - Magistrate courts and Session courts</td>
         <td>All district court criminal matters</td>
         <td>2000
         </td>
@@ -272,7 +222,8 @@
 
       <tr>
         <td>Supreme Court</td>
-        <td>Apex court of India, deals with all the final appeal cases from High Courts and various Tribunals in India,
+        <td>Apex court of India, deals with all the final appeal cases from High Courts and various Tribunals in
+          India,
           also
           has Writ Jurisdiction and exercises various constitutional powers.</td>
         <td>1947
@@ -295,7 +246,8 @@
 
       <tr>
         <td>CEGAT/CESTAT</td>
-        <td>CEGAT is disbanded after the repealing of Gold Control Act, CESTAT is the only functioning tribunal, it is
+        <td>CEGAT is disbanded after the repealing of Gold Control Act, CESTAT is the only functioning tribunal, it
+          is
           the
           highest tribunal with respect to Indirect taxes and the appeals beyond it lays to Supreme Court.</td>
         <td>2000
@@ -335,7 +287,7 @@
         <td>Deals with Liquidation, Winding up, Amalgamation., oppression and mismanagement in a Company and any
           deviance
           with
-          respect to Memorandum of Association & Articles of Associations.</td>
+          respect to Memorandum of Association and Articles of Associations.</td>
         <td>2000
         </td>
         <td>No Case found</td>
@@ -421,7 +373,8 @@
 
       <tr>
         <td>Crif Defaulter List</td>
-        <td>The list provides all the credit related information including any credit based defaults and credit reports
+        <td>The list provides all the credit related information including any credit based defaults and credit
+          reports
           on
           individuals and companies</td>
         <td>2012
@@ -431,7 +384,8 @@
 
       <tr>
         <td>EPF Defaulter List</td>
-        <td>Defaulter list where the establishments have failed to abide by the provisions of Employees Provident Funds
+        <td>Defaulter list where the establishments have failed to abide by the provisions of Employees Provident
+          Funds
         </td>
         <td>2012
         </td>
@@ -448,7 +402,8 @@
 
       <tr>
         <td>MCA Defaulter List</td>
-        <td>Defaulter list where the establishments have failed to clear the debts to the debtors OR stakeholders of the
+        <td>Defaulter list where the establishments have failed to clear the debts to the debtors OR stakeholders
+          of the
           establishment.</td>
         <td>2016
         </td>
@@ -462,7 +417,8 @@
 
       <tr>
         <td>First Information Report(FIR)</td>
-        <td>All Cognizable and non-bailable offences registered u/s 154 of the Code of Criminal Procedure, 1973 by the
+        <td>All Cognizable and non-bailable offences registered u/s 154 of the Code of Criminal Procedure, 1973 by
+          the
           law
           enforcement authorities.</td>
         <td>2011
@@ -484,7 +440,8 @@
   <tr>
     <td>
       <p>BRKM020003462012 (Link)<br>
-        Court: C J M Division <br>Act & Section: U/S 341, 323 , 326, 504, 506, 34, Indian Penal Code<br>Case Type:
+        Court: C J M Division <br>Act and Section: U/S 341, 323 , 326, 504, 506, 34, Indian Penal Code<br>Case
+        Type:
         Criminal</p>
     </td>
     <td>State of Bihar</td>
@@ -495,11 +452,13 @@
   <tr>
     <td>
       <p>BRRO020000842015 (Link)<br>
-        Court: CJM Div. Rohtas <br>Act & Section: U/S 341, 323 , 379, 504, 509, 34, Indian Penal Code<br>Case Type:
+        Court: CJM Div. Rohtas <br>Act and Section: U/S 341, 323 , 379, 504, 509, 34, Indian Penal Code<br>Case
+        Type:
         Criminal</p>
     </td>
     <td>Binda Devi</td>
-    <td>Sanjay Singh and others 1) Name: Sanjay Singh and others<br>Address:Vill-Shumbha, P.S.- Sasaram Mufassil,
+    <td>Sanjay Singh and others 1) Name: Sanjay Singh and others<br>Address:Vill-Shumbha, P.S.- Sasaram
+      Mufassil,
       Distt-Rohtas.</td>
     <td>Disposed</td>
     <td><b>98%</b> match with name full match + fatherName ExactMatch + address CloseMatch</td>
@@ -509,7 +468,7 @@
   <tr>
     <td>
       <p>BRRO020126932016 (Link)<br>
-        Court: Complex 1 CJM Division <br>Act & Section: U/S 30(a), 37(b), Excise Act (Bihar) <br>Case Type:
+        Court: Complex 1 CJM Division <br>Act and Section: U/S 30(a), 37(b), Excise Act (Bihar) <br>Case Type:
         Criminal
       </p>
     </td>
@@ -522,7 +481,7 @@
   <tr>
     <td>
       <p>BRRO030005922012 (Link)<br>
-        Court: Complex 1 CJSD Division <br>Act & Section: U/S 10, Civil Procedure Code <br>Case Type: Civil</p>
+        Court: Complex 1 CJSD Division <br>Act and Section: U/S 10, Civil Procedure Code <br>Case Type: Civil</p>
     </td>
     <td>Jagi Khatik and others</td>
     <td>Sanjay kumar Singh and others 1) Name:Sanjay kumar Singh and others
@@ -535,6 +494,3 @@
 </table>
 
   </div>
-<!-- </body>
-
-</html> -->
