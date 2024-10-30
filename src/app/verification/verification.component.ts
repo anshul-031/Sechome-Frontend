@@ -205,7 +205,7 @@ export class VerificationComponent implements OnInit{
 
 
 
-  title = 'Sechome';
+  title = 'InstantVerify';
 
   @ViewChild("displayUserProvidedPhoto") displayUserProvidedPhoto: any;
   video: any;
@@ -307,7 +307,7 @@ export class VerificationComponent implements OnInit{
     //   redirect: this.redirect,
     //   mode: this.mode
     // };
-    // fetch("/sechome/geturl", requestOptions)
+    // fetch("/InstantVerify/geturl", requestOptions)
     //   .then(response => response.json())
     //   .then(result => {
     //     this.digilockerUrl = result.result.url;
@@ -337,7 +337,7 @@ export class VerificationComponent implements OnInit{
       headers: myHeaders,
       mode: this.mode
     };
-    fetch("/sechome/getdata", requestOptions)
+    fetch("/InstantVerify/getdata", requestOptions)
       .then(response => response.text())
       .then(result => console.log(result))
       .catch(error => console.log('error', error));

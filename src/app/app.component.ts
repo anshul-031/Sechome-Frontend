@@ -9,7 +9,7 @@ import { HeaderComponent } from './components/shared/header.component';
 
 @Injectable()
 export class AppComponent {
-  title = 'Sechome';
+  title = 'InstantVerify';
 
 }
 
